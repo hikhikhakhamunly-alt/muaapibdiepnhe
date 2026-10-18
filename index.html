@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Điệp Tống bán NOVAX</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;900&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --neon:#00ff88;
+  --cyan:#00d4ff;
+  --purple:#b14dff;
+  --pink:#ff66cc;
+  --gold:#ffd700;
+  --text:#e8f4ff;
+  --muted:#7fa5c9;
+}
+html,body{
+  min-height:100%;font-family:'Quicksand',sans-serif;color:var(--text);
+  background:#000308;overflow-x:hidden;
+}
+
+/* ===== NỀN ===== */
+.bg{
+  position:fixed;inset:0;z-index:-3;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 20%, #0a2050 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 80% 80%, #0a2a30 0%, transparent 60%),
+    linear-gradient(135deg,#000308,#050a1a 30%,#020815 60%,#000308);
+  animation:bgPulse 15s ease-in-out infinite;
+}
+@keyframes bgPulse{
+  0%,100%{filter:hue-rotate(0deg) brightness(1)}
+  50%{filter:hue-rotate(15deg) brightness(1.1)}
+}
+
+.cursor-glow{
+  position:fixed;width:600px;height:600px;border-radius:50%;
+  pointer-events:none;
+  background:radial-gradient(circle,
+    rgba(0,212,255,.15) 0%,
+    rgba(0,255,136,.08) 30%,
+    transparent 70%);
+  transform:translate(-50%,-50%);
+  transition:opacity .3s;z-index:-1;filter:blur(40px);
+}
+
+.glow{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:
+    radial-gradient(ellipse 500px 400px at 10% 20%, rgba(0,212,255,.2), transparent 70%),
+    radial-gradient(ellipse 500px 400px at 90% 80%, rgba(0,255,136,.15), transparent 70%),
+    radial-gradient(ellipse 400px 300px at 50% 50%, rgba(177,77,255,.1), transparent 70%);
+  animation:glowPulse 6s ease-in-out infinite;
+}
+@keyframes glowPulse{
+  0%,100%{opacity:.5;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.15)}
+}
+
+.wave{
+  position:fixed;bottom:0;left:0;right:0;height:200px;z-index:-1;
+  background:linear-gradient(180deg,transparent,rgba(0,212,255,.08),rgba(0,255,136,.05));
+  mask-image:radial-gradient(ellipse at center, black 30%, transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse at center, black 30%, transparent 80%);
+  animation:wave 8s ease-in-out infinite;
+}
+@keyframes wave{
+  0%,100%{transform:translateY(0) scaleY(1)}
+  50%{transform:translateY(-20px) scaleY(1.2)}
+}
+
+.particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.particle{
+  position:absolute;width:3px;height:3px;border-radius:50%;
+  animation:float linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(100vh) scale(0) rotate(0deg);opacity:0}
+  10%{opacity:1}
+  90%{opacity:1}
+  100%{transform:translateY(-10vh) scale(1.5) rotate(360deg);opacity:0}
+}
+
+/* ===== LAYOUT ===== */
+.wrap{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  padding:30px 20px;position:relative;z-index:1;
+}
+.split{
+  width:100%;max-width:1100px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:30px;align-items:stretch;
+  animation:fadeUp 1s ease;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(40px)}
+  to{opacity:1;transform:none}
+}
+@media(max-width:768px){
+  .split{grid-template-columns:1fr}
+}
+
+/* ===== LEFT PANEL ===== */
+.left-panel{
+  background:linear-gradient(145deg,rgba(10,30,60,.7),rgba(5,15,35,.5));
+  border:1px solid rgba(0,212,255,.25);
+  border-radius:32px;padding:60px 40px;
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 80px rgba(0,212,255,.1),inset 0 1px 0 rgba(0,212,255,.2);
+  display:flex;flex-direction:column;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.left-panel::before{
+  content:'';position:absolute;inset:0;border-radius:32px;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(0,212,255,.25), transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(0,255,136,.2), transparent 50%);
+  animation:glowBreath 5s ease-in-out infinite;
+  z-index:-1;pointer-events:none;
+}
+@keyframes glowBreath{
+  0%,100%{opacity:.5;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.05)}
+}
+
+.left-panel h1{
+  font-family:'Orbitron',sans-serif;font-size:72px;
+  background:linear-gradient(90deg,#00d4ff,#00ff88,#ffd700,#ff66cc,#b14dff,#00d4ff);
+  background-size:300% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:16px;letter-spacing:4px;font-weight:900;
+  animation:shineText 3s linear infinite;
+  filter:drop-shadow(0 0 30px rgba(0,212,255,.7));
+  line-height:1;position:relative;z-index:1;
+}
+@keyframes shineText{
+  0%{background-position:0% center}
+  100%{background-position:300% center}
+}
+.left-panel .sub{
+  font-family:'Orbitron',sans-serif;font-size:14px;margin-bottom:30px;
+  letter-spacing:4px;font-weight:600;text-transform:uppercase;
+  background:linear-gradient(90deg,#7fa5c9,#00d4ff,#7fa5c9);
+  background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shineSub 2s linear infinite;
+  position:relative;z-index:1;
+}
+@keyframes shineSub{to{background-position:200% center}}
+.left-panel p.desc{
+  color:var(--muted);font-size:15px;line-height:1.8;margin-top:20px;
+  position:relative;z-index:1;
+}
+
+/* ===== RIGHT PANEL ===== */
+.right-panel{
+  display:flex;flex-direction:column;gap:20px;justify-content:center;
+}
+.btn{
+  display:flex;width:100%;padding:32px 28px;
+  border:1px solid rgba(0,212,255,.25);border-radius:24px;cursor:pointer;
+  font-family:'Orbitron',sans-serif;text-decoration:none;
+  transition:all .5s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
+  align-items:center;gap:20px;text-align:left;
+  background:linear-gradient(135deg,rgba(255,68,136,.3) 0%,rgba(255,102,204,.3) 100%);
+  border-color:rgba(255,100,180,.4);
+  backdrop-filter:blur(10px);
+  box-shadow:0 10px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(0,212,255,.15);
+  color:inherit;
+}
+.btn::before{
+  content:'';position:absolute;top:0;left:-150%;width:150%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,100,180,.4),transparent);
+  transition:left .8s;z-index:1;
+}
+.btn:hover::before{left:150%}
+.btn:hover{
+  transform:translateY(-8px) scale(1.03);
+  box-shadow:0 25px 60px rgba(255,100,180,.5),0 0 80px rgba(255,100,180,.4);
+  border-color:rgba(255,100,180,.8);
+}
+.btn .icon{
+  font-size:48px;min-width:80px;height:80px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:20px;flex-shrink:0;transition:transform .5s;
+  background:rgba(255,100,180,.15);
+  box-shadow:inset 0 2px 15px rgba(255,100,180,.3),0 5px 15px rgba(0,0,0,.3);
+}
+.btn:hover .icon{transform:scale(1.2) rotate(-10deg)}
+.btn .text{flex:1;text-align:left;color:#fff;position:relative;z-index:2}
+.btn .label{
+  font-size:20px;font-weight:800;display:block;margin-bottom:8px;letter-spacing:2px;
+  background:linear-gradient(90deg,#00d4ff,#00ff88,#ffd700,#00d4ff);
+  background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shineLabel 3s linear infinite;
+}
+@keyframes shineLabel{to{background-position:200% center}}
+.btn .desc{font-size:13px;opacity:.85;font-family:'Quicksand',sans-serif;font-weight:600}
+
+.support{
+  text-align:center;color:var(--muted);font-size:14px;line-height:1.7;
+  padding:0 10px;
+}
+.support b{color:var(--cyan);font-weight:700}
+
+.footer{
+  margin-top:10px;padding-top:20px;
+  border-top:1px solid rgba(0,212,255,.15);
+  color:var(--muted);font-size:12px;text-align:center;letter-spacing:1.5px;
+}
+
+@media(max-width:768px){
+  .left-panel h1{font-size:52px}
+  .left-panel{padding:44px 28px}
+}
+@media(max-width:560px){
+  .left-panel h1{font-size:42px;letter-spacing:3px}
+  .btn{padding:24px 20px}
+  .btn .icon{font-size:36px;min-width:60px;height:60px}
+  .btn .label{font-size:16px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="glow"></div>
+<div class="wave"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="particles" id="particles"></div>
+
+<div class="wrap">
+  <div class="split">
+    <div class="left-panel">
+      <h1>ĐIỆP<br>TỐNG</h1>
+      <p class="sub">✨ Bán NOVAX ✨</p>
+      <p class="desc">
+        Hệ thống bán app NOVAX.
+        Nhấn nút bên cạnh để nhắn tin mua app qua Zalo.
+      </p>
+    </div>
+
+    <div class="right-panel">
+      <a class="btn" href="https://zalo.me/0338432921" target="_blank" rel="noopener noreferrer">
+        <span class="icon">📱</span>
+        <span class="text">
+          <span class="label">MUA APP</span>
+          <span class="desc">Nhắn tin qua Zalo: 0338432921</span>
+        </span>
+      </a>
+
+      <p class="support">
+        Hỗ trợ kéo tâm ib <b>Điệp Tống NoVax</b>
+      </p>
+
+      <div class="footer">© 2026 Điệp Tống – NOVAX</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Ánh sáng theo chuột
+document.addEventListener('mousemove', (e) => {
+  const g = document.getElementById('cursorGlow');
+  g.style.left = e.clientX + 'px';
+  g.style.top = e.clientY + 'px';
+});
+
+// Particles
+(function(){
+  const container = document.getElementById('particles');
+  const colors = ['#00d4ff','#00ff88','#b14dff','#ff66cc','#ffd700'];
+  for (let i = 0; i < 40; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    const c = colors[Math.floor(Math.random() * colors.length)];
+    p.style.background = c;
+    p.style.boxShadow = `0 0 10px ${c},0 0 20px ${c}`;
+    p.style.animationDuration = (Math.random() * 15 + 10) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    container.appendChild(p);
+  }
+})();
+</script>
+
+</body>
+</html>
